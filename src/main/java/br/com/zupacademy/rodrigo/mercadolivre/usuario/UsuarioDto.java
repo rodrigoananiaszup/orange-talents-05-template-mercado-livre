@@ -11,13 +11,13 @@ import javax.validation.constraints.PastOrPresent;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-//import br.com.zupacademy.rodrigo.mercadolivre.validacao.UniqueValue;
+import br.com.zupacademy.rodrigo.mercadolivre.validacao.UniqueValue;
 
 public class UsuarioDto {
 
 	@Email
 	@NotEmpty
-	//@UniqueValue(domainClass = Usuario.class, fieldName = "login", message = "Este login ja cadastrado em nosso sistema")
+	@UniqueValue(domainClass = Usuario.class, fieldName = "login", message = "Este login ja cadastrado em nosso sistema")
 	private String login;
 
 	@NotNull
