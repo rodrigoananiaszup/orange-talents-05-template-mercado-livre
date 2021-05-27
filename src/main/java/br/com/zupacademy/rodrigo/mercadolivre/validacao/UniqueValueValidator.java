@@ -1,11 +1,12 @@
 package br.com.zupacademy.rodrigo.mercadolivre.validacao;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import java.util.List;
 
 //validações do @UniqueValue
 public class UniqueValueValidator implements ConstraintValidator<UniqueValue, Object>{
