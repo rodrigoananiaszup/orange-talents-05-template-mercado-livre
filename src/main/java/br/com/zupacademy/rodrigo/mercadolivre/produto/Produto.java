@@ -2,6 +2,7 @@ package br.com.zupacademy.rodrigo.mercadolivre.produto;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -25,6 +26,7 @@ import org.hibernate.validator.constraints.Length;
 import br.com.zupacademy.rodrigo.mercadolivre.categoria.Categoria;
 import br.com.zupacademy.rodrigo.mercadolivre.produto.caracteristica.Caracteristica;
 import br.com.zupacademy.rodrigo.mercadolivre.produto.caracteristica.CaracteristicaDto;
+import br.com.zupacademy.rodrigo.mercadolivre.produto.imagem.Imagem;
 import br.com.zupacademy.rodrigo.mercadolivre.usuario.Usuario;
 
 @Entity
@@ -43,11 +45,11 @@ public class Produto {
 	private BigDecimal qtdeDisponivel;
 	@Length(max = 100, min = 1)
 	private String descricao;
-	
-    @NotNull
-    @Column(nullable = true)
-    @PastOrPresent
-    private LocalDateTime dataCriacao = LocalDateTime.now();
+
+	@NotNull
+	@Column(nullable = true)
+	@PastOrPresent
+	private LocalDateTime dataCriacao = LocalDateTime.now();
 
 	@NotNull
 	@ManyToOne
@@ -57,12 +59,19 @@ public class Produto {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "produto")
 	private Set<Caracteristica> caracteristica;
 
+	@OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE)
+	private Set<Imagem> imagens = new HashSet<Imagem>();
+
 	@ManyToOne
 	@NotNull
 	Usuario usuario;
 
-	public Produto(String nome, BigDecimal valor, @Positive BigDecimal qtdeDisponivel, String descricao, Categoria categoria,
-			LocalDateTime dataCriacao, Set<CaracteristicaDto> caracteristica, Usuario usuario) {
+	@Deprecated
+	public Produto() {
+	}
+
+	public Produto(String nome, BigDecimal valor, @Positive BigDecimal qtdeDisponivel, String descricao,
+			Categoria categoria, LocalDateTime dataCriacao, Set<CaracteristicaDto> caracteristica, Usuario usuario) {
 		this.nome = nome;
 		this.valor = valor;
 		this.qtdeDisponivel = qtdeDisponivel;
@@ -73,5 +82,12 @@ public class Produto {
 		this.usuario = usuario;
 	}
 
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public Set<Imagem> getImagens() {
+		return imagens;
+	}
 
 }
