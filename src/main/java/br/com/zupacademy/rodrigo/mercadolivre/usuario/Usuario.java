@@ -23,101 +23,111 @@ public class Usuario implements UserDetails {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @NotNull
-    @Column(nullable = true)
-    private String login;
+	@NotNull
+	@Column(nullable = true)
+	private String login;
 
-    @NotNull
-    @Column(nullable = true)
-    @Length(min = 6)
-    private String senha;
+	@NotNull
+	@Column(nullable = true)
+	@Length(min = 6)
+	private String senha;
 
-    @NotNull
-    @Column(nullable = true)
-    @PastOrPresent
-    private LocalDateTime dataCriacao = LocalDateTime.now();
+	@NotNull
+	@Column(nullable = true)
+	@PastOrPresent
+	private LocalDateTime dataCriacao = LocalDateTime.now();
 
+	public Usuario(String login, String senha) {
+		this.login = login;
+		this.senha = senha;
+	}
 
-    public Usuario(String login, String senha) {
-        this.login = login;
-        this.senha =  senha;
-    }
-    
-    @Deprecated
-    public Usuario( ) {}
+	@Deprecated
+	public Usuario() {
+	}
 
-    public Long getId() {
-        return  this.id;
-    }
+	public Long getId() {
+		return this.id;
+	}
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
+	public String getLogin() {
+		return login;
+	}
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
-        return result;
-    }
+	public String getSenha() {
+		return senha;
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Usuario other = (Usuario) obj;
-        if (id == null) {
-            if (other.id != null)
-                return false;
-        } else if (!id.equals(other.id))
-            return false;
-        return true;
-    }
+	public LocalDateTime getDataCriacao() {
+		return dataCriacao;
+	}
 
-    @Override
-    public String getPassword() {
-        return this.senha;
-    }
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return null;
+	}
 
-    @Override
-    public String getUsername() {
-        return this.login;
-    }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Usuario other = (Usuario) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
+	}
 
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
+	@Override
+	public String getPassword() {
+		return this.senha;
+	}
 
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
+	@Override
+	public String getUsername() {
+		return this.login;
+	}
 
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return true;
+	}
 
 	@Override
 	public String toString() {
 		return "Usuario [id=" + id + ", login=" + login + ", senha=" + senha + ", dataCriacao=" + dataCriacao + "]";
 	}
-    
-    
 
 }
