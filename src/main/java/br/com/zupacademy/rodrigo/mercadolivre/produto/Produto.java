@@ -90,4 +90,8 @@ public class Produto {
 		return imagens;
 	}
 
+	public Long getId() {
+		return id;
+	}
+
 }
