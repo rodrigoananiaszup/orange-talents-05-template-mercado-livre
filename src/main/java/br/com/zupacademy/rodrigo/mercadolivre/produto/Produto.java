@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
@@ -24,6 +25,8 @@ import javax.validation.constraints.Positive;
 import org.hibernate.validator.constraints.Length;
 
 import br.com.zupacademy.rodrigo.mercadolivre.categoria.Categoria;
+import br.com.zupacademy.rodrigo.mercadolivre.opiniao.OpiniaoProduto;
+import br.com.zupacademy.rodrigo.mercadolivre.pergunta.PerguntaProduto;
 import br.com.zupacademy.rodrigo.mercadolivre.produto.caracteristica.Caracteristica;
 import br.com.zupacademy.rodrigo.mercadolivre.produto.caracteristica.CaracteristicaDto;
 import br.com.zupacademy.rodrigo.mercadolivre.produto.imagem.Imagem;
@@ -61,6 +64,13 @@ public class Produto {
 
 	@OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE)
 	private Set<Imagem> imagens = new HashSet<Imagem>();
+	
+	@OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE)
+	private Set<PerguntaProduto> pergunta = new HashSet<PerguntaProduto>();
+	
+	@OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE)
+	private Set<OpiniaoProduto> opiniao = new HashSet<OpiniaoProduto>();
+
 
 	@ManyToOne
 	@NotNull
@@ -81,6 +91,8 @@ public class Produto {
 		this.caracteristica = caracteristica.stream().map(o -> new Caracteristica(o, this)).collect(Collectors.toSet());
 		this.usuario = usuario;
 	}
+	
+	
 
 	public Usuario getUsuario() {
 		return usuario;
@@ -93,5 +105,43 @@ public class Produto {
 	public Long getId() {
 		return id;
 	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public BigDecimal getValor() {
+		// TODO Auto-generated method stub
+		return valor;
+	}
+
+	public Set<Caracteristica> getCaracteristica() {
+		// TODO Auto-generated method stub
+		return caracteristica;
+	}
+
+	public <T> Set<T> mapeiaImagem(Function<Imagem, T> funcaoMapeadora) {
+		return this.imagens.stream().map(funcaoMapeadora)
+				.collect(Collectors.toSet());
+	}
+	
+	public <T> Set<T> mapeiaPergunta(Function<PerguntaProduto, T> funcaoMapeadora) {
+		return this.pergunta.stream().map(funcaoMapeadora)
+				.collect(Collectors.toSet());
+	}
+	
+	public <T> Set<T> mapeiaOpiniao(Function<OpiniaoProduto, T> funcaoMapeadora) {
+		return this.opiniao.stream().map(funcaoMapeadora)
+				.collect(Collectors.toSet());
+	}
+
+
+
+	
+	
 
 }

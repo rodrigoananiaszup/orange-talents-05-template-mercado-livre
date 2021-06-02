@@ -72,6 +72,8 @@ public class Imagem {
 			return false;
 		return true;
 	}
+	
+	
 
 	@Override
 	public String toString() {

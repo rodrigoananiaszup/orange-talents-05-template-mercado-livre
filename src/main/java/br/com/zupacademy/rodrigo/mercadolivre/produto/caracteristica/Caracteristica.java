@@ -16,29 +16,42 @@ import br.com.zupacademy.rodrigo.mercadolivre.produto.Produto;
 public class Caracteristica {
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @NotBlank
-    private String nome;
+	@NotBlank
+	private String nome;
 
-    @NotBlank
-    @Column(columnDefinition = "text")
-    private String descricao;
+	@NotBlank
+	@Column(columnDefinition = "text")
+	private String descricao;
 
-    @ManyToOne
-    private Produto produto;
-    public Caracteristica(String nome, String descricao) {
-        this.nome = nome;
-        this.descricao = descricao;
-    }
+	@ManyToOne
+	private Produto produto;
+	
+	
 
-    public Caracteristica(CaracteristicaDto caracteristicaDto, Produto produto) {
-        this.nome = caracteristicaDto.getNome();
-        this.descricao = caracteristicaDto.getDescricao();
-        this.produto = produto;
-    }
+	public Caracteristica() {}
 
+	public Caracteristica(String nome, String descricao) {
+		this.nome = nome;
+		this.descricao = descricao;
+	}
 
+	public Caracteristica(CaracteristicaDto caracteristicaDto, Produto produto) {
+		this.nome = caracteristicaDto.getNome();
+		this.descricao = caracteristicaDto.getDescricao();
+		this.produto = produto;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+	
+	
 
 }
