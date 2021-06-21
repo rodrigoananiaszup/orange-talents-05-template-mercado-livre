@@ -1,5 +1,6 @@
 package br.com.zupacademy.rodrigo.mercadolivre.pergunta;
 
 public interface Mailer {
-	void send(String body, String subject, String nameFrom, String from, String nameTo);
+
+	void enviar(String string, String string2, String login, String string3, String login2);
 }

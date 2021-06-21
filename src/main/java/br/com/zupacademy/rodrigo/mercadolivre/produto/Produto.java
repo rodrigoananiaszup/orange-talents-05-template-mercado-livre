@@ -123,6 +123,10 @@ public class Produto {
 		// TODO Auto-generated method stub
 		return caracteristica;
 	}
+	
+	public String getEmailUsuario() {
+		return usuario.getLogin();
+	}
 
 	public <T> Set<T> mapeiaImagem(Function<Imagem, T> funcaoMapeadora) {
 		return this.imagens.stream().map(funcaoMapeadora)
@@ -138,7 +142,27 @@ public class Produto {
 		return this.opiniao.stream().map(funcaoMapeadora)
 				.collect(Collectors.toSet());
 	}
+	
+	public boolean possuiQuantidade(BigDecimal quantidade) {
+		return (this.qtdeDisponivel.compareTo(quantidade) == -1 ? false : true);
+	}
 
+	public boolean reduzirQuantidade(BigDecimal quantidade) {
+		if (possuiQuantidade(quantidade)) {
+			this.qtdeDisponivel = qtdeDisponivel.subtract(quantidade);
+			return true;
+		}
+		return false;
+	}
+
+	public boolean diminuiQtde(Integer qtd) {
+		if(this.qtdeDisponivel.compareTo(new BigDecimal(qtd)) >= 0){
+			this.qtdeDisponivel = this.qtdeDisponivel.subtract(new BigDecimal(qtd));
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 
 	

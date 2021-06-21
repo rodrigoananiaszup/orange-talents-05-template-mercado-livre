@@ -27,7 +27,7 @@ public class PerguntaController {
 	@Autowired
 	private PerguntaProdutoRepository perguntaRepository;
 	@Autowired
-	private Emails emails;
+	private Email email;
 
 	@PostMapping("/produto/{id}/pergunta")
 	@Transactional
@@ -41,7 +41,7 @@ public class PerguntaController {
 			PerguntaProduto pergunta = this.perguntaRepository.save(dto.toModel(usuario, produto));
 			URI uri = builder.path("/produto/" + id + "/pergunta/{id}").buildAndExpand(pergunta.getId()).toUri();
 
-			emails.novaPergunta(pergunta);
+			email.novaPergunta(pergunta);
 
 			return ResponseEntity.ok(new PerguntaDto(pergunta));
 

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 public class EmailFake implements Mailer {
 
 	@Override
-	public void send(String body, String subject, String nameFrom, String from, String nameTo) {
+	public void enviar(String body, String subject, String nameFrom, String from, String nameTo) {
 		System.out.println(body);
 		System.out.println(subject);
 		System.out.println(nameFrom);
