@@ -1,5 +1,8 @@
 package br.com.zupacademy.rodrigo.mercadolivre.compra;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -8,11 +11,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
+import br.com.zupacademy.rodrigo.mercadolivre.compra.retorno.Pagamento;
+import br.com.zupacademy.rodrigo.mercadolivre.compra.retorno.StatusPagamento;
 import br.com.zupacademy.rodrigo.mercadolivre.gateway.Gateway;
 import br.com.zupacademy.rodrigo.mercadolivre.produto.Produto;
 import br.com.zupacademy.rodrigo.mercadolivre.usuario.Usuario;
@@ -43,7 +49,11 @@ public class Compra {
 	@NotNull
 	private Gateway gateway;
 
+	@Enumerated(EnumType.STRING)
 	private StatusCompra statusCompra;
+
+	@OneToMany(mappedBy = "compra")
+	private List<Pagamento> pagamentos = new ArrayList<Pagamento>();
 
 	public Compra(Produto produto, Integer qtd, Usuario user, Gateway gateway) {
 		this.produto = produto;
@@ -80,6 +90,25 @@ public class Compra {
 
 	public StatusCompra getStatusCompra() {
 		return this.statusCompra;
+	}
+
+	public List<Pagamento> getPagamentos() {
+		return this.pagamentos;
+	}
+
+	public boolean atualizaStatus(Pagamento pagamento) {
+		if (!this.statusCompra.equals(StatusCompra.FINALIZADA)) {
+
+			if (pagamento.getStatusPagamento().equals(StatusPagamento.SUCESSO)) {
+				this.statusCompra = StatusCompra.FINALIZADA;
+				return true;
+			} else {
+				this.statusCompra = StatusCompra.FALHA;
+				return false;
+			}
+
+		}
+		return true;
 	}
 
 	@Override
